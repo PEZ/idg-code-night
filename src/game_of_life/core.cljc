@@ -1,15 +1,6 @@
 (ns game-of-life.core
-  (:require [ysera.test :refer [is= is is-not]]))
-
-; A function declaration
-; defn [name doc-string? attr-map? [params*] prepost-map? body]
-;
-; if [test then else?]
-; (if (= 3 3) "That's true" "This will never happen") => "That's true"
-(if (= 1 2) 1 3)
-; pos? [num]
-; (pos? 5) => true
-; (pos? -1) => false
+  (:require [ysera.test :refer [is= is is-not]]
+            [clojure.set]))
 
 (defn abs                                                   ; name
   "The absolute value of a number."                         ; doc-string?
@@ -22,7 +13,6 @@
   (if (pos? x)
     x
     (- x)))
-
 
 ; Higher order functions
 ; map [f coll*]
@@ -77,20 +67,15 @@
 
 (apply + (map inc (filter even? [1 2 3 4 5 6 7 8])))
 
-(->> [1 2 3 4 5 6 7 8]
-     (filter even?)
-     (map inc)
-     (apply +))
-
 (defn create-state
   "Creates the state model for the game."
   {:test (fn []
            (is= (create-state " #  "
                               "####"
                               "  # ")
-                {:living-cells #{[1 0]
-                                 [0 1] [1 1] [2 1] [3 1]
-                                 [2 2]}}))}
+                {:living-cells #{[2 2] [1 0] [1 1] [3 1] [2 1] [0 1]}, :size [4 3]})
+           (is= (create-state "#")
+                {:living-cells #{[0 0]}, :size [1 1]}))}
   [& strings]
   {:living-cells (->> strings
                       (map-indexed (fn [y string]
@@ -100,7 +85,8 @@
                                                   string)))
                       (apply concat)
                       (remove nil?)
-                      (into #{}))})
+                      (into #{}))
+   :size         [(count (first strings)) (count strings)]})
 
 (defn neighbours-of
   "Returns a set of all cells that are neighbours to the given cell."
@@ -142,6 +128,8 @@
 ;; 3 Any live cell with more than three live neighbours dies, as if by overpopulation.
 ;; 4 Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.
 
+;; (* 1 2 3 4 5)
+
 (defn next-generation
   {:test (fn []
            (let [state (create-state "##"
@@ -177,13 +165,12 @@
                                    false))))
                  (into #{})))))
 
-
-
 (defn toggle-cell
   {:test (fn []
            (is (-> (create-state "")
                    (toggle-cell [0 0])
                    (cell-alive? [0 0])))
+
            (is-not (-> (create-state "#")
                        (toggle-cell [0 0])
                        (cell-alive? [0 0]))))}
@@ -194,13 +181,50 @@
               (clojure.set/difference living-cells #{cell})
               (conj living-cells cell)))))
 
+(comment
 
+  (def s [1 2 3 4 5])
+  s
+  (reduce * s)
+  (apply * s)
+  (apply * (map (partial * 2) s))
+  (->> s
+       (map (partial * 2))
+       (repeat 4)
+       (zipmap (range 4)))
 
+  `{1 [1 2 3] 2 [2 4 6]}
+  '{:a :b :c :d}
+  #{:a :b :c :d :e}
 
+  (str ['foo] #?@(:clj ["clj"] :cljs ["cljs"]))
 
+  #_['(1 2 3 4 5)]
+  `(1 2 3 4 5)
+  `{1 2 3 4}
+  `{1 2 3 4}
+  #{:1 :2 :3 :4 :5}
+  #'s
 
+  (def r #(str % " 🤘"))
+  (def h #(str "I ❤️ " %))
+  #?(:clj  (h "Clojure")
+     :cljs (r "ClojureScript"))
 
+  (create-state " ####   ###    #"
+                "####   ##      #"
+                "  #  ##  ###   #")
 
+  (->> [1 2 3 4 5 6 7 8]
+       (filter even?)
+       (map inc)
+       (apply +))
 
+  (->> [1 2 3 4 5]
+       (apply *)))
 
+(defn foo [x]
+  (str x))
+
+'({:a 1} {:a 1} {:a 1} {:a 1})
 

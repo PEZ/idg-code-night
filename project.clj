@@ -4,17 +4,15 @@
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
 
-  
-  
   :min-lein-version "2.7.1"
 
-  :dependencies [[org.clojure/clojure "1.9.0-beta4"]
-                 [org.clojure/clojurescript "1.9.946"]
-                 [org.clojure/core.async  "0.3.443"]
+  :dependencies [[org.clojure/clojure "1.9.0"]
+                 [org.clojure/clojurescript "1.10.145"]
+                 [org.clojure/core.async  "0.4.474"]
                  [ysera "1.1.0"]
                  [reagent "0.7.0"]]
 
-  :plugins [[lein-figwheel "0.5.14"]
+  :plugins [[lein-figwheel "0.5.15"]
             [lein-cljsbuild "1.1.7" :exclusions [[org.clojure/clojure]]]]
 
   :source-paths ["src"]
@@ -26,13 +24,13 @@
                 ;; The presence of a :figwheel configuration here
                 ;; will cause figwheel to inject the figwheel client
                 ;; into your build
-                :figwheel     {:on-jsload "game-of-life.main/on-js-reload"
+                :figwheel     {:on-jsload "game-of-life.main/on-js-reload"}
                                ;; :open-urls will pop open your application
                                ;; in the default browser once Figwheel has
                                ;; started and compiled your application.
                                ;; Comment this out once it no longer serves you.
                                ;:open-urls ["http://localhost:3449/index.html"]
-                               }
+
 
                 :compiler     {:main                 game-of-life.main
                                :asset-path           "js/compiled/out"
@@ -56,7 +54,7 @@
              ;; :server-port 3449 ;; default
              ;; :server-ip "127.0.0.1"
 
-             :css-dirs ["resources/public/css"] ;; watch and update CSS
+             :css-dirs ["resources/public/css"]} ;; watch and update CSS
 
              ;; Start an nREPL server into the running figwheel process
              ;; :nrepl-port 7888
@@ -89,20 +87,17 @@
 
              ;; to pipe all the output to the repl
              ;; :server-logfile false
-             }
-
-
-  ;; Setting up nREPL for Figwheel and ClojureScript dev
+;; Setting up nREPL for Figwheel and ClojureScript dev
   ;; Please see:
   ;; https://github.com/bhauman/lein-figwheel/wiki/Using-the-Figwheel-REPL-within-NRepl
-  :profiles {:dev {:dependencies [[binaryage/devtools "0.9.4"]
-                                  [figwheel-sidecar "0.5.14"]
-                                  [com.cemerick/piggieback "0.2.2"]]
+  :profiles {:dev {:dependencies [[binaryage/devtools "0.9.4"]]
+                                  ;;[figwheel-sidecar "0.5.14"]
+                                  ;;[com.cemerick/piggieback "0.2.2"]]
                    ;; need to add dev source path here to get user.clj loaded
                    :source-paths ["src" "dev"]
                    ;; for CIDER
                    ;; :plugins [[cider/cider-nrepl "0.12.0"]]
-                   :repl-options {:nrepl-middleware [cemerick.piggieback/wrap-cljs-repl]}
+                   ;;:repl-options {:nrepl-middleware [cemerick.piggieback/wrap-cljs-repl]}
                    ;; need to add the compliled assets to the :clean-targets
                    :clean-targets ^{:protect false} ["resources/public/js/compiled"
                                                      :target-path]}})
