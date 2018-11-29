@@ -2,7 +2,7 @@
   (:require [game-of-life.core :refer [cell-alive?]]))
 
 (defn f [a b]
- (let [foo 1]))
+  (let [foo 1]))
 
 (defn app-component [{state         :state
                       trigger-event :trigger-event}]
@@ -41,4 +41,3 @@
    [:button {:on-click (fn []
                          (trigger-event {:name :next-generation}))}
     "NEXT"]])
- 

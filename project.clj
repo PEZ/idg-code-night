@@ -9,10 +9,10 @@
   :dependencies [[org.clojure/clojure "1.9.0"]
                  [org.clojure/clojurescript "1.10.145"]
                  [org.clojure/core.async  "0.4.474"]
-                 [ysera "1.1.0"]
+                 [ysera "1.2.0"]
                  [reagent "0.7.0"]]
 
-  :plugins [[lein-figwheel "0.5.15"]
+  :plugins [[lein-figwheel "0.5.17"]
             [lein-cljsbuild "1.1.7" :exclusions [[org.clojure/clojure]]]]
 
   :source-paths ["src"]
@@ -51,7 +51,7 @@
                                :pretty-print  false}}]}
 
   :figwheel {;; :http-server-root "public" ;; default and assumes "resources"
-             ;; :server-port 3449 ;; default
+             ;; :server-port 5449
              ;; :server-ip "127.0.0.1"
 
              :css-dirs ["resources/public/css"]} ;; watch and update CSS

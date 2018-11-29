@@ -18,7 +18,6 @@
 (defn handle-event [{name :name data :data}]
   (cond (= name :next-generation)
         (swap! app-state-atom next-generation)
-
         (= name :cell-click)
         (swap! app-state-atom toggle-cell data)))
 

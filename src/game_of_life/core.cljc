@@ -14,6 +14,14 @@
     x
     (- x)))
 
+
+(comment
+  (foo
+    ;;
+   bar
+         ;foo
+   baz))
+
 ; Higher order functions
 ; map [f coll*]
 ;
@@ -37,6 +45,7 @@
 (map inc [1 3 4])
 (map (fn [x] (+ x 1)) [1 3 4])
 
+
 (map + [1 2 3] [2 5 7])
 
 (defn distance
@@ -44,8 +53,8 @@
   {:test (fn []
            (is= (distance [0 0] [0 0]) 0)
            (is= (distance [1 1] [3 1]) 2)
-           (is= (distance [1 1] [3 3]) 2)
-           (is= (distance [1 1] [1 3]) 2)
+           (is= 2 (distance [1 1] [3 3]))
+           (is= 1 (distance [1 1] [1 2]))
            (is= (distance [4 3] [1 1]) 3))}
   [cell-1 cell-2]
   (->> (map - cell-1 cell-2)
@@ -65,7 +74,9 @@
 ;; To map with an index, use map-indexed [f coll]
 ;; then f is two variable function of index and item.
 
+
 (apply + (map inc (filter even? [1 2 3 4 5 6 7 8])))
+(apply + (map identity (range 100)))
 
 (defn create-state
   "Creates the state model for the game."
@@ -168,7 +179,7 @@
 (defn toggle-cell
   {:test (fn []
            (is (-> (create-state "")
-                   (toggle-cell [0 0])
+                   (toggle-cell [0 1])
                    (cell-alive? [0 0])))
 
            (is-not (-> (create-state "#")
@@ -183,13 +194,17 @@
 
 (comment
 
+  (create)
   (def s [1 2 3 4 5])
   s
+  (println s)
+  bork
   (reduce * s)
   (apply * s)
   (apply * (map (partial * 2) s))
   (->> s
        (map (partial * 2))
+       
        (repeat 4)
        (zipmap (range 4)))
 
@@ -206,25 +221,40 @@
   #{:1 :2 :3 :4 :5}
   #'s
 
-  (def r #(str % " 🤘"))
   (def h #(str "I ❤️ " %))
-  #?(:clj  (h "Clojure")
-     :cljs (r "ClojureScript"))
+  (h #?(:clj  "Clojure"
+        :cljs "ClojureScript"))
 
   (create-state " ####   ###    #"
                 "####   ##      #"
                 "  #  ##  ###   #")
 
+  (map (fn [_] (create-state " # ## #")) (range 2))
+  (map #(str %) (range 10))
   (->> [1 2 3 4 5 6 7 8]
        (filter even?)
        (map inc)
        (apply +))
 
   (->> [1 2 3 4 5]
-       (apply *)))
+       (apply *))
 
-(defn foo [x]
-  (str x))
+  (defn foo [x]
+    (str x))
 
-'({:a 1} {:a 1} {:a 1} {:a 1})
+  '({:a 1} {:a 1} {:a 1} {:a 1})
 
+  (foo [1 2 3
+        4 5 6
+        7 8 9])
+
+  (foobar "a"
+          "b"
+          "c")
+
+  (foobar "a"
+          "b")
+
+  (create-state " ####   ###    #"
+                "####   ##      #"
+                "  #  ##  ###   #"))
