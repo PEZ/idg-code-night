@@ -26,6 +26,8 @@
         (:queue)
         (empty?))))
 
+(let [])
+
 (comment
   (enclosing? "[][]")
   (enclosing? "([][])"))

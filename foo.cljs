@@ -775,8 +775,8 @@
   #'s
 
   (def h #(str "I ❤️ " %))
-  (h #?(:clj  "Clojure"
-        :cljs "ClojureScript"))
+  (h #? (:clj  "Clojure"
+         :cljs "ClojureScript"))
 
   (create-state " ####   ###    #"
   

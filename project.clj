@@ -12,7 +12,7 @@
                  [ysera "1.2.0"]
                  [reagent "0.7.0"]]
 
-  :plugins [[lein-figwheel "0.5.17"]
+  :plugins [;;[lein-figwheel "0.5.17"]
             [lein-cljsbuild "1.1.7" :exclusions [[org.clojure/clojure]]]]
 
   :source-paths ["src"]
