@@ -52,7 +52,7 @@
 
   :figwheel {;; :http-server-root "public" ;; default and assumes "resources"
              ;; :server-port 5449
-             ;; :server-ip "127.0.0.1"
+             :server-ip "127.0.0.1"
 
              :css-dirs ["resources/public/css"]} ;; watch and update CSS
 
